@@ -3,7 +3,7 @@
 <%@ include file="../layout/header.jsp"%>
 
 <div class="container">
-    <form action="/action_page.php" class="was-validated">
+    <form class="was-validated">
 
       <div class="form-group">
         <label for="username">Username:</label>
@@ -35,7 +35,9 @@
         </label>
       </div>
 
-      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <button id="btn-save" class="btn btn-primary">가입하기</button>
 </div>
+
+<script src="/blog/js/user.js"></script>
 <%@ include file="../layout/footer.jsp"%>
