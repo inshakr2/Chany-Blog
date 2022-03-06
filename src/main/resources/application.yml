@@ -1,7 +1,5 @@
 server:
   port: 28088
-  servlet:
-    context-path: /blog
 
 spring:
   mvc:
