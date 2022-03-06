@@ -29,11 +29,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
-	// https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-jasper
 	implementation group: 'org.apache.tomcat', name: 'tomcat-jasper', version: '9.0.41'
-	// https://mvnrepository.com/artifact/javax.servlet/jstl
 	implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
-	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs
 	//implementation group: 'org.springframework.security', name: 'spring-security-taglibs', version: '5.6.1'
 
 

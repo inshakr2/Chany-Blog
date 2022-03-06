@@ -4,8 +4,7 @@ import com.chany.blog.model.User;
 import com.chany.blog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,5 +22,11 @@ public class UserService {
             System.out.println("ERROR UserService.save :" + e.getMessage());
         }
         return -1;
+    }
+
+    @Transactional(readOnly = true)
+    public User login(User user) {
+
+        return userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
     }
 }
