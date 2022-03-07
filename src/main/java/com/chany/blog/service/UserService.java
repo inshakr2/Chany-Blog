@@ -3,6 +3,7 @@ package com.chany.blog.service;
 import com.chany.blog.model.User;
 import com.chany.blog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,9 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder;
 
     @Transactional
     public Integer save(User user) {
+
+        String hashPwd = encoder.encode(user.getPassword());
+        user.setPassword(hashPwd);
+
         try {
             userRepository.save(user);
             return 1;
@@ -24,9 +30,4 @@ public class UserService {
         return -1;
     }
 
-    @Transactional(readOnly = true)
-    public User login(User user) {
-
-        return userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
-    }
 }

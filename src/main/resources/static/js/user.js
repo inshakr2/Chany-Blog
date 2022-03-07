@@ -4,9 +4,6 @@ let index= {
             this.save();
         });
 
-        $("#btn-login").on("click", ()=>{ // function(){} / () =>{} this를 바인딩
-            this.login();
-        });
     },
 
     save: function(){
@@ -22,7 +19,7 @@ let index= {
         $.ajax({
             // 회원가입 수행 요청
             type: "POST",
-            url: "/api/user",
+            url: "/auth/joinProc",
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json"
@@ -34,34 +31,7 @@ let index= {
             alert(JSON.stringify(error));
 
         });
-    },
-
-
-    login: function(){
-            //alert('user의 save함수');
-            let data = {
-                username: $("#username").val(),
-                password: $("#password").val(),
-            };
-            //console.log(data);
-
-            // ajax를 통해 insert 요청
-            $.ajax({
-                // 회원가입 수행 요청
-                type: "POST",
-                url: "/api/user/login",
-                data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json"
-            }).done(function(response){
-                alert("로그인이 완료되었습니다.");
-
-                location.href = "/";
-            }).fail(function(error){
-                alert(JSON.stringify(error));
-
-            });
-        }
+    }
 }
 
 index.init();
