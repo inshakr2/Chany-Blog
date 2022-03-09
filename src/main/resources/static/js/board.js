@@ -12,7 +12,6 @@ let index= {
         };
 
         $.ajax({
-            // 회원가입 수행 요청
             type: "POST",
             url: "/api/board",
             data: JSON.stringify(data),
