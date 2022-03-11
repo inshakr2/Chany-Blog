@@ -7,9 +7,7 @@ import com.chany.blog.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +19,12 @@ public class BoardApiController {
     public ResponseDto<Integer> save(@RequestBody Board board,
                                      @AuthenticationPrincipal PrincipalDetail principal) {
         boardService.write(board, principal.getUser());
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
+
+    @DeleteMapping("/api/board/{id}")
+    public ResponseDto<Integer> delete(@PathVariable Integer id) {
+        boardService.delete(id);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 }
