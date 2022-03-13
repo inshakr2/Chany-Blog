@@ -7,6 +7,10 @@ let index= {
         $("#btn-delete").on("click", ()=>{
             this.deleteById();
         });
+
+        $("#btn-update").on("click", ()=>{
+            this.update();
+        });
     },
 
     save: function(){
@@ -43,7 +47,29 @@ let index= {
         }).fail(function(error){
             alert(JSON.stringify(error));
         });
-    }
+    },
+
+    update: function(){
+            let id = $("id").val();
+
+            let data = {
+                title: $("#title").val(),
+                content: $("#content").val()
+            };
+
+            $.ajax({
+                type: "PUT",
+                url: "/api/board/" + id,
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=UTF-8",
+                dataType: "json"
+            }).done(function(response){
+                alert("게시물 수정이 완료되었습니다.");
+                location.href = "/";
+            }).fail(function(error){
+                alert(JSON.stringify(error));
+            });
+        }
 }
 
 index.init();

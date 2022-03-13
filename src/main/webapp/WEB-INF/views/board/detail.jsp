@@ -4,9 +4,9 @@
     <div class="container">
         <button class="btn btn-success m-1" onclick="history.back()">Back</button>
         <c:if test="${board.user.id == principal.user.id}" >
-        <button id="btn-delete" class="btn btn-danger float-right m-1">삭제</button>
+            <button id="btn-delete" class="btn btn-danger float-right m-1">삭제</button>
+            <a href="/board/${board.id}/updateForm" class="btn btn-warning float-right m-1">수정</a>
         </c:if>
-        <button id="btn-update" class="btn btn-warning float-right m-1">수정</button>
         <br />
         <div>
             글 번호 : <span id="id"><i>${board.id}</i></span>

@@ -10,14 +10,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    @Transactional
     public void write(Board board, User user) {
         board.setUser(user);
         boardRepository.save(board);
@@ -37,8 +38,17 @@ public class BoardService {
                 });
     }
 
-    @Transactional
     public void delete(Integer id) {
         boardRepository.deleteById(id);
+    }
+
+    public void update(Integer id, Board requestBoard) {
+        Board findBoard = boardRepository.findById(id)
+                .orElseThrow(() -> {
+                    return new IllegalArgumentException("글 수정하기 실패 : ID를 찾을 수 없습니다.");
+                });
+
+        findBoard.setTitle(requestBoard.getTitle());
+        findBoard.setContent(requestBoard.getContent());
     }
 }

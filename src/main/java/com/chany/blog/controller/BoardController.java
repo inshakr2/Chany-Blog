@@ -22,7 +22,7 @@ public class BoardController {
     // @AuthenticationPrincipal PrincipalDetail principal
     @GetMapping({"", "/"})
     public String index(Model model,
-                        @PageableDefault(size=3, sort="id", direction = DESC) Pageable pageable) {
+                        @PageableDefault(size = 3, sort = "id", direction = DESC) Pageable pageable) {
 
         model.addAttribute("boards", boardService.list(pageable));
         return "index";
@@ -40,4 +40,12 @@ public class BoardController {
         return "board/detail";
     }
 
+    @GetMapping("/board/{id}/updateForm")
+    public String update(@PathVariable int id, Model model) {
+
+        Board board = boardService.detail(id);
+        model.addAttribute("board", board);
+
+        return "board/updateForm";
+    }
 }
