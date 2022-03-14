@@ -7,14 +7,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
 
-    @Transactional
     public Integer save(User user) {
 
         String hashPwd = encoder.encode(user.getPassword());
@@ -30,4 +32,13 @@ public class UserService {
         return -1;
     }
 
+    public void update(User requestUser) {
+        User findUser = userRepository.findById(requestUser.getId())
+                .orElseThrow(() -> {
+                    return new IllegalArgumentException("회원 수정 실패 : 존재하지 않는 회원입니다.");
+                });
+
+        findUser.setPassword(encoder.encode(requestUser.getPassword()));
+        findUser.setEmail(requestUser.getEmail());
+    }
 }

@@ -50,7 +50,7 @@ let index= {
     },
 
     update: function(){
-            let id = $("id").val();
+            let id = $("#id").val();
 
             let data = {
                 title: $("#title").val(),
@@ -65,7 +65,7 @@ let index= {
                 dataType: "json"
             }).done(function(response){
                 alert("게시물 수정이 완료되었습니다.");
-                location.href = "/";
+                location.href = "/board/"+id;
             }).fail(function(error){
                 alert(JSON.stringify(error));
             });
