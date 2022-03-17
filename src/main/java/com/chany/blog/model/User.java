@@ -10,6 +10,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+import static javax.persistence.EnumType.STRING;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +22,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 100)
     private String username;
 
     @Column(nullable = false, length = 100)
@@ -29,9 +31,25 @@ public class User {
     @Column(nullable = false, length = 50)
     private String email;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private Role role = Role.USER;
+
+    @Enumerated(STRING)
+    private AuthType oauth = AuthType.NORMAL;
 
     @CreationTimestamp
     private Timestamp createDate;
+
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
+    public User(String username, String password, String email, AuthType oauth) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.oauth = oauth;
+    }
 }
