@@ -28,3 +28,9 @@ spring:
 
 chany:
   key: chany1234
+
+  kakao:
+    auth-redirect-url: http://localhost:28088/auth/kakao/callback
+    auth-request-url: https://kauth.kakao.com/oauth/token
+    client-id: 0b574c03d54a84e92c553163fef5b367
+    profile-request-url: https://kapi.kakao.com/v2/user/me
