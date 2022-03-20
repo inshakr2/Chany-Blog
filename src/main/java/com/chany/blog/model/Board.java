@@ -1,5 +1,7 @@
 package com.chany.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,12 +31,13 @@ public class Board {
     @ColumnDefault("0")
     private int count;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
-    private List<Reply> reply;
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"board"})
+    private List<Reply> replies;
 
     @CreationTimestamp
     private Timestamp createDate;

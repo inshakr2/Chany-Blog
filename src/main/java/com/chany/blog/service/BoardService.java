@@ -32,7 +32,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public Board detail(Integer id) {
-        return boardRepository.findById(id)
+        return boardRepository.findWithReplies(id)
                 .orElseThrow(() -> {
                     return new IllegalArgumentException("글 상세보기 실패 : ID를 찾을 수 없습니다.");
                 });
