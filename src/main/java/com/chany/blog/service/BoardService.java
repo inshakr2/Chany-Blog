@@ -30,7 +30,7 @@ public class BoardService {
     @Transactional(readOnly = true)
     public Page<Board> list(Pageable pageable) {
 
-        return boardRepository.findAll(pageable);
+        return boardRepository.findAllWithUser(pageable);
     }
 
     @Transactional(readOnly = true)
