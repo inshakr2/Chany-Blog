@@ -12,8 +12,9 @@ import java.util.Optional;
 public interface BoardRepository extends JpaRepository<Board, Integer> {
 
     @Query("SELECT b FROM Board b " +
-            "JOIN FETCH b.replies r " +
-            "JOIN FETCH r.user " +
+            "JOIN FETCH b.user u " +
+            "LEFT JOIN FETCH b.replies r " +
+            "LEFT JOIN FETCH r.user " +
             "WHERE b.id = :id")
     Optional<Board> findWithReplies(@Param("id") Integer id);
 }

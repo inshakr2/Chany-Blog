@@ -31,12 +31,13 @@ public class Board {
     @ColumnDefault("0")
     private int count;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
     private User user;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"board"})
+    @OrderBy("id desc")
     private List<Reply> replies;
 
     @CreationTimestamp

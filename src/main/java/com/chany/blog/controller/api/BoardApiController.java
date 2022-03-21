@@ -3,6 +3,7 @@ package com.chany.blog.controller.api;
 import com.chany.blog.config.auth.PrincipalDetail;
 import com.chany.blog.dto.ResponseDto;
 import com.chany.blog.model.Board;
+import com.chany.blog.model.Reply;
 import com.chany.blog.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,17 @@ public class BoardApiController {
     public ResponseDto<Integer> update(@PathVariable Integer id,
                                        @RequestBody Board board) {
         boardService.update(id, board);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
+
+    // /api/board/${data.boardId}/reply
+
+    @PostMapping("/api/board/{boardId}/reply")
+    public ResponseDto<Integer> replySave(@PathVariable int boardId,
+                                          @RequestBody Reply reply,
+                                          @AuthenticationPrincipal PrincipalDetail principal) {
+        boardService.writeReply(reply, boardId, principal.getUser());
+
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 }

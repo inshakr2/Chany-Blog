@@ -1,8 +1,10 @@
 package com.chany.blog.service;
 
 import com.chany.blog.model.Board;
+import com.chany.blog.model.Reply;
 import com.chany.blog.model.User;
 import com.chany.blog.repository.BoardRepository;
+import com.chany.blog.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final ReplyRepository replyRepository;
 
     public void write(Board board, User user) {
         board.setUser(user);
@@ -50,5 +53,15 @@ public class BoardService {
 
         findBoard.setTitle(requestBoard.getTitle());
         findBoard.setContent(requestBoard.getContent());
+    }
+
+    public void writeReply(Reply reply, int boardId, User user) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> {
+                    return new IllegalArgumentException("댓글쓰기 실패 : 게시판 ID를 찾을 수 없습니다.");
+                });
+        reply.setBoard(board);
+        reply.setUser(user);
+        replyRepository.save(reply);
     }
 }
