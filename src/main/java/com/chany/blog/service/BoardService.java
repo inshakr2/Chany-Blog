@@ -1,18 +1,17 @@
 package com.chany.blog.service;
 
+import com.chany.blog.dto.ReplySaveRequestDto;
 import com.chany.blog.model.Board;
 import com.chany.blog.model.Reply;
 import com.chany.blog.model.User;
 import com.chany.blog.repository.BoardRepository;
 import com.chany.blog.repository.ReplyRepository;
+import com.chany.blog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,6 +19,7 @@ import java.util.Optional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
     private final ReplyRepository replyRepository;
 
     public void write(Board board, User user) {
@@ -55,13 +55,18 @@ public class BoardService {
         findBoard.setContent(requestBoard.getContent());
     }
 
-    public void writeReply(Reply reply, int boardId, User user) {
-        Board board = boardRepository.findById(boardId)
+    public void writeReply(ReplySaveRequestDto replySaveRequestDto) {
+        User user = userRepository.findById(replySaveRequestDto.getUserId())
+                .orElseThrow(() -> {
+                    return new IllegalArgumentException("댓글쓰기 실패 : 유저 ID를 찾을 수 없습니다.");
+                });
+
+        Board board = boardRepository.findById(replySaveRequestDto.getBoardId())
                 .orElseThrow(() -> {
                     return new IllegalArgumentException("댓글쓰기 실패 : 게시판 ID를 찾을 수 없습니다.");
                 });
-        reply.setBoard(board);
-        reply.setUser(user);
+
+        Reply reply = new Reply(replySaveRequestDto.getContent(), board, user);
         replyRepository.save(reply);
     }
 }
