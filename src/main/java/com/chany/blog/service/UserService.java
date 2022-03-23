@@ -21,17 +21,24 @@ public class UserService {
 
     public Integer save(User user) {
 
-        String hashPwd = encoder.encode(user.getPassword());
-        user.setPassword(hashPwd);
+        if (userRepository.findByUsername(user.getUsername()).isEmpty()) {
 
-        try {
-            userRepository.save(user);
-            return 1;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("ERROR UserService.save :" + e.getMessage());
+            String hashPwd = encoder.encode(user.getPassword());
+            user.setPassword(hashPwd);
+
+            try {
+                userRepository.save(user);
+                return 1;
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("ERROR UserService.save :" + e.getMessage());
+            }
+            return -1;
+
+        } else {
+            throw new IllegalArgumentException("회원 가입 실패 : 이미 존재하는 회원입니다.");
         }
-        return -1;
+
     }
 
 
