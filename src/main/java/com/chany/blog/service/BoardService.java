@@ -69,4 +69,8 @@ public class BoardService {
         Reply reply = new Reply(replySaveRequestDto.getContent(), board, user);
         replyRepository.save(reply);
     }
+
+    public void replyDelete(int replyId) {
+        replyRepository.deleteById(replyId);
+    }
 }
