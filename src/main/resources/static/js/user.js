@@ -8,6 +8,11 @@ let index= {
             this.update();
         });
 
+        $("#btn-update-auth").on("click", ()=>{
+            this.update_auth();
+        });
+
+
     },
 
     save: function(){
@@ -49,7 +54,8 @@ let index= {
                 id: $("#id").val(),
                 username: $("#username").val(),
                 password: $("#password").val(),
-                email: $("#email").val()
+                email: $("#email").val(),
+                oauth: $("#oauth").val()
             };
 
             $.ajax({
@@ -59,13 +65,22 @@ let index= {
                 contentType: "application/json; charset=utf-8",
                 dataType: "json"
             }).done(function(response){
-                alert("회원정보 수정이 완료되었습니다.");
+                if(response.status === 500) {
+                    alert("회원정보 수정이 실패하였습니다.")
 
-                location.href = "/";
+                } else {
+
+                    alert("회원정보 수정이 완료되었습니다.");
+                    location.href = "/";
+            }
             }).fail(function(error){
                 alert(JSON.stringify(error));
 
             });
+        },
+
+        update_auth: function(){
+            alert("소셜 계정은 회원 정보 수정이 불가합니다.")
         }
 }
 

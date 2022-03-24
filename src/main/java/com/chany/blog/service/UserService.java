@@ -4,6 +4,10 @@ import com.chany.blog.model.AuthType;
 import com.chany.blog.model.User;
 import com.chany.blog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
 
+    private final AuthenticationManager manager;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
 
@@ -41,7 +46,6 @@ public class UserService {
 
     }
 
-
     public User saveFromKakao(String username, String email, String password) {
 
         String hashPwd = encoder.encode(password);
@@ -50,19 +54,35 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void update(User requestUser) {
+    public Integer update(User requestUser) {
 
-        if (requestUser.getOauth() != AuthType.NORMAL) {
-            throw new IllegalArgumentException("소셜 계정은 회원정보 변경이 불가합니다.");
+        if (requestUser.getOauth() == AuthType.NORMAL) {
+
+            try {
+                User findUser = userRepository.findById(requestUser.getId())
+                        .orElseThrow(() -> {
+                            return new IllegalArgumentException("회원 수정 실패 : 존재하지 않는 회원입니다.");
+                        });
+
+                findUser.setPassword(encoder.encode(requestUser.getPassword()));
+                findUser.setEmail(requestUser.getEmail());
+
+                // 세션 등록
+
+                Authentication authenticate = manager.authenticate(
+                        new UsernamePasswordAuthenticationToken(requestUser.getUsername(), requestUser.getPassword())
+                );
+                SecurityContextHolder.getContext().setAuthentication(authenticate);
+
+                return 1;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return -1;
         } else {
-            User findUser = userRepository.findById(requestUser.getId())
-                    .orElseThrow(() -> {
-                        return new IllegalArgumentException("회원 수정 실패 : 존재하지 않는 회원입니다.");
-                    });
-
-            findUser.setPassword(encoder.encode(requestUser.getPassword()));
-            findUser.setEmail(requestUser.getEmail());
+            throw new IllegalArgumentException("소셜 계정은 회원정보 변경이 불가합니다.");
         }
+
     }
 
     @Transactional(readOnly = true)
