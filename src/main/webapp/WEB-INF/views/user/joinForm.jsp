@@ -3,24 +3,23 @@
 <%@ include file="../layout/header.jsp"%>
 
 <div class="container">
-    <form class="was-validated">
+    <form>
 
-      <div class="form-group">
+      <div class="form-group row">
         <label for="username">Username:</label>
         <input type="text" class="form-control" id="username" placeholder="Enter username" name="username" required>
-        <div class="valid-feedback">Valid.</div>
-        <div class="invalid-feedback">Please fill out this field.</div>
+        <div id="username-check"></div>
       </div>
 
 
-      <div class="form-group">
+      <div class="form-group row">
         <label for="password">Password:</label>
         <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
         <div class="valid-feedback">Valid.</div>
         <div class="invalid-feedback">Please fill out this field.</div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group row">
         <label for="email">Email:</label>
         <input type="email" class="form-control" id="email" placeholder="Enter Email Address" name="email" required>
         <div class="valid-feedback">Valid.</div>
@@ -40,4 +39,6 @@
 </div>
 
 <script src="/js/user.js"></script>
+
+
 <%@ include file="../layout/footer.jsp"%>

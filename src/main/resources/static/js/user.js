@@ -16,7 +16,9 @@ let index= {
             this.leave();
         });
 
-
+        $("#username").on("propertychange change keyup paste input", ()=>{
+            this.checkUser();
+        });
     },
 
     save: function(){
@@ -83,36 +85,65 @@ let index= {
             });
         },
 
-        update_auth: function(){
-            alert("소셜 계정은 회원 정보 수정이 불가합니다.");
-        },
+    update_auth: function(){
+        alert("소셜 계정은 회원 정보 수정이 불가합니다.");
+    },
 
 
-        leave: function(){
-            if (confirm("정말 탈퇴하시겠습니까?")) {
-                let data = {
-                    id: $("#id").val(),
-                    username: $("#username").val(),
-                    password: $("#password").val(),
-                    email: $("#email").val(),
-                    oauth: $("#oauth").val()
-                };
+    leave: function(){
+        if (confirm("정말 탈퇴하시겠습니까?")) {
+            let data = {
+                id: $("#id").val(),
+                username: $("#username").val(),
+                password: $("#password").val(),
+                email: $("#email").val(),
+                oauth: $("#oauth").val()
+            };
 
-                $.ajax({
-                    type: "DELETE",
-                    url: "/user",
-                    data: JSON.stringify(data),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json"
-                }).done(function(response){
-                    alert("회원 탈퇴 완료");
-                    location.href = "/";
-                }).fail(function(error){
-                    alert(JSON.stringify(error));
+            $.ajax({
+                type: "DELETE",
+                url: "/user",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).done(function(response){
+                alert("회원 탈퇴 완료");
+                location.href = "/";
+            }).fail(function(error){
+                alert(JSON.stringify(error));
 
-                });
-            }
+            });
         }
+    },
+
+
+    checkUser: function(){
+        var username = $('#username').val();
+
+        $.ajax({
+            type:'POST',
+            url:'/auth/user/check',
+            data:{username:username}
+        }).done(function(response){
+
+            if (response.data == 1) {
+                console.log("success : " + response.data);
+                $("#username-check").addClass("valid-feedback");
+                $("#username-check").html("사용 가능한 아이디입니다.");
+                $("#username").addClass("form-control is-valid");
+            } else {
+                console.log("fail : " + response.data);
+                $("#username-check").addClass("invalid-feedback");
+                $("#username-check").html("이미 사용중인 아이디입니다.");
+                $("#username").addClass("form-control is-invalid");
+            }
+
+        }).fail(function(error){
+          alert(JSON.stringify(error));
+
+        });
+    }
 }
 
 index.init();
+

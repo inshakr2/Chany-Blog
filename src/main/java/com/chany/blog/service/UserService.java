@@ -96,4 +96,14 @@ public class UserService {
 
         userRepository.deleteById(userId);
     }
+
+    public int userCheck(String username) {
+
+        if (userRepository.findByUsername(username).isEmpty()) {
+            return 1;
+        } else {
+            return -1;
+        }
+
+    }
 }
