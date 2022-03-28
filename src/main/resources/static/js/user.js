@@ -12,6 +12,10 @@ let index= {
             this.update_auth();
         });
 
+        $("#btn-leave").on("click", ()=>{
+            this.leave();
+        });
+
 
     },
 
@@ -80,7 +84,34 @@ let index= {
         },
 
         update_auth: function(){
-            alert("소셜 계정은 회원 정보 수정이 불가합니다.")
+            alert("소셜 계정은 회원 정보 수정이 불가합니다.");
+        },
+
+
+        leave: function(){
+            if (confirm("정말 탈퇴하시겠습니까?")) {
+                let data = {
+                    id: $("#id").val(),
+                    username: $("#username").val(),
+                    password: $("#password").val(),
+                    email: $("#email").val(),
+                    oauth: $("#oauth").val()
+                };
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "/user",
+                    data: JSON.stringify(data),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json"
+                }).done(function(response){
+                    alert("회원 탈퇴 완료");
+                    location.href = "/";
+                }).fail(function(error){
+                    alert(JSON.stringify(error));
+
+                });
+            }
         }
 }
 

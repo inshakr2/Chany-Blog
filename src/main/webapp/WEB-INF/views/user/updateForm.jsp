@@ -39,7 +39,7 @@
             </c:otherwise>
       </c:choose>
 
-
+      <button type="button" id="btn-leave" class="btn btn-danger">회원탈퇴</button>
     </form>
 </div>
 

@@ -91,4 +91,9 @@ public class UserService {
         return userRepository.findByUsername(username).orElse(null);
 
     }
+
+    public void leave(int userId) {
+
+        userRepository.deleteById(userId);
+    }
 }

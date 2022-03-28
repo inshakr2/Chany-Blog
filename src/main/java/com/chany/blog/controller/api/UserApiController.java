@@ -5,10 +5,9 @@ import com.chany.blog.model.User;
 import com.chany.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,6 +28,15 @@ public class UserApiController {
         int result = userService.update(user);
 
         return new ResponseDto<Integer>(HttpStatus.OK.value(), result);
+    }
+
+    @DeleteMapping("/user")
+    public ResponseDto<Integer> leave(@RequestBody User user , HttpSession session) {
+
+        userService.leave(user.getId());
+        session.invalidate();
+
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
 //    @PostMapping("/user/login")

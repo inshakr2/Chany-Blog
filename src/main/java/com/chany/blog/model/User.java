@@ -1,5 +1,6 @@
 package com.chany.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 import static javax.persistence.EnumType.STRING;
 
@@ -36,6 +38,10 @@ public class User {
 
     @Enumerated(STRING)
     private AuthType oauth = AuthType.NORMAL;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @JsonIgnoreProperties({"board"})
+    List<Board> boards;
 
     @CreationTimestamp
     private Timestamp createDate;
