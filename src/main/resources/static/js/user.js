@@ -19,6 +19,10 @@ let index= {
         $("#username").on("propertychange change keyup paste input", ()=>{
             this.checkUser();
         });
+
+        $("#re-password").on("propertychange change keyup paste input", ()=>{
+            this.checkPassword();
+        });
     },
 
     save: function(){
@@ -142,7 +146,22 @@ let index= {
           alert(JSON.stringify(error));
 
         });
-    }
+    },
+
+    checkPassword: function(){
+            var pwd = $('#password').val();
+            var pwd2 = $("#re-password").val();
+
+            if (pwd == pwd2) {
+                $("#pwd-check-result").removeClass("alert alert-danger")
+                $("#pwd-check-result").addClass("alert alert-success")
+                $("#pwd-check-result").html("비밀번호가 일치합니다.")
+            } else {
+                $("#pwd-check-result").removeClass("alert alert-success")
+                $("#pwd-check-result").addClass("alert alert-danger")
+                $("#pwd-check-result").html("비밀번호가 일치하지 않습니다.")
+            }
+        }
 }
 
 index.init();

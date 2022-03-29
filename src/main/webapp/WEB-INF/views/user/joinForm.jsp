@@ -15,24 +15,19 @@
       <div class="form-group row">
         <label for="password">Password:</label>
         <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
-        <div class="valid-feedback">Valid.</div>
-        <div class="invalid-feedback">Please fill out this field.</div>
       </div>
+
+      <div class="form-group row">
+        <label for="re-password">Confirm Password:</label>
+        <input type="re-password" class="form-control" id="re-password" placeholder="Confirm password" name="re-password" required>
+      </div>
+      <div class="alert alert-danger" id="pwd-check-result">비밀번호가 일치하지 않습니다.</div>
 
       <div class="form-group row">
         <label for="email">Email:</label>
         <input type="email" class="form-control" id="email" placeholder="Enter Email Address" name="email" required>
-        <div class="valid-feedback">Valid.</div>
-        <div class="invalid-feedback">Please fill out this field.</div>
       </div>
-
-      <div class="form-group form-check">
-        <label class="form-check-label">
-          <input class="form-check-input" type="checkbox" name="remember" required> 회원가입 약관에 동의합니다.
-          <div class="valid-feedback">Valid.</div>
-          <div class="invalid-feedback">Check this checkbox to continue.</div>
-        </label>
-      </div>
+      
 
     </form>
     <button id="btn-save" class="btn btn-primary">가입하기</button>
