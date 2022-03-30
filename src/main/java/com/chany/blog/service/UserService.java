@@ -1,5 +1,6 @@
 package com.chany.blog.service;
 
+import com.chany.blog.dto.UserSaveRequestDto;
 import com.chany.blog.model.AuthType;
 import com.chany.blog.model.User;
 import com.chany.blog.repository.UserRepository;
@@ -24,7 +25,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
 
-    public Integer save(User user) {
+    public Integer save(UserSaveRequestDto dto) {
+
+        User user = new User(
+                dto.getUsername(),
+                dto.getPassword(),
+                dto.getEmail()
+                );
 
         if (userRepository.findByUsername(user.getUsername()).isEmpty()) {
 

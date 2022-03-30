@@ -1,6 +1,7 @@
 package com.chany.blog.controller.api;
 
 import com.chany.blog.dto.ResponseDto;
+import com.chany.blog.dto.UserSaveRequestDto;
 import com.chany.blog.model.User;
 import com.chany.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +17,8 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("/auth/joinProc")
-    public ResponseDto<Integer> save(@RequestBody User user) {
-        System.out.println("CALL UserApiController.save");
-        int result = userService.save(user);
+    public ResponseDto<Integer> save(@RequestBody UserSaveRequestDto userSaveRequestDto) {
+        int result = userService.save(userSaveRequestDto);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), result);
     }
 
