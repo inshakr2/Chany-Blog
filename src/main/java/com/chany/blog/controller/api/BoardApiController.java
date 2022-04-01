@@ -1,6 +1,7 @@
 package com.chany.blog.controller.api;
 
 import com.chany.blog.config.auth.PrincipalDetail;
+import com.chany.blog.dto.BoardDto;
 import com.chany.blog.dto.ReplySaveRequestDto;
 import com.chany.blog.dto.ResponseDto;
 import com.chany.blog.model.Board;
@@ -18,9 +19,9 @@ public class BoardApiController {
     private final BoardService boardService;
 
     @PostMapping("/api/board")
-    public ResponseDto<Integer> save(@RequestBody Board board,
+    public ResponseDto<Integer> save(@RequestBody BoardDto boardDto,
                                      @AuthenticationPrincipal PrincipalDetail principal) {
-        boardService.write(board, principal.getUser());
+        boardService.write(boardDto, principal.getUser());
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
@@ -32,8 +33,8 @@ public class BoardApiController {
 
     @PutMapping("/api/board/{id}")
     public ResponseDto<Integer> update(@PathVariable Integer id,
-                                       @RequestBody Board board) {
-        boardService.update(id, board);
+                                       @RequestBody BoardDto boardDto) {
+        boardService.update(id, boardDto);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 

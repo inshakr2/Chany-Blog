@@ -1,5 +1,6 @@
 package com.chany.blog.service;
 
+import com.chany.blog.dto.BoardDto;
 import com.chany.blog.dto.ReplySaveRequestDto;
 import com.chany.blog.model.Board;
 import com.chany.blog.model.Reply;
@@ -22,8 +23,10 @@ public class BoardService {
     private final UserRepository userRepository;
     private final ReplyRepository replyRepository;
 
-    public void write(Board board, User user) {
-        board.setUser(user);
+    public void write(BoardDto boardDto, User user) {
+
+        Board board = new Board(boardDto.getTitle(), boardDto.getContent(), user);
+
         boardRepository.save(board);
     }
 
@@ -45,14 +48,13 @@ public class BoardService {
         boardRepository.deleteById(id);
     }
 
-    public void update(Integer id, Board requestBoard) {
+    public void update(Integer id, BoardDto boardDto) {
         Board findBoard = boardRepository.findById(id)
                 .orElseThrow(() -> {
                     return new IllegalArgumentException("글 수정하기 실패 : ID를 찾을 수 없습니다.");
                 });
 
-        findBoard.setTitle(requestBoard.getTitle());
-        findBoard.setContent(requestBoard.getContent());
+        findBoard.updateBoard(boardDto);
     }
 
     public void writeReply(ReplySaveRequestDto replySaveRequestDto) {

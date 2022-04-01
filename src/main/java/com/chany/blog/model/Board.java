@@ -1,11 +1,9 @@
 package com.chany.blog.model;
 
+import com.chany.blog.dto.BoardDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -15,7 +13,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity @Data @Builder
+@Entity @Getter @Builder
 public class Board {
 
     @Id
@@ -42,4 +40,15 @@ public class Board {
 
     @CreationTimestamp
     private Timestamp createDate;
+
+    public Board(String title, String content, User user) {
+        this.title = title;
+        this.content = content;
+        this.user = user;
+    }
+
+    public void updateBoard(BoardDto boardDto) {
+        this.title = boardDto.getTitle();
+        this.content = boardDto.getContent();
+    }
 }
