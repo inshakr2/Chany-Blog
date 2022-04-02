@@ -21,7 +21,7 @@ public class BoardController {
     // @AuthenticationPrincipal PrincipalDetail principal
     @GetMapping({"", "/"})
     public String index(Model model,
-                        @PageableDefault(size = 3, sort = "id", direction = DESC) Pageable pageable) {
+                        @PageableDefault(size = 5, sort = "id", direction = DESC) Pageable pageable) {
 
         model.addAttribute("boards", boardService.list(pageable));
         return "index";

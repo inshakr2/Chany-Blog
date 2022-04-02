@@ -131,15 +131,17 @@ let index= {
         }).done(function(response){
 
             if (response.data == 1) {
-                console.log("success : " + response.data);
+                $("#username-check").removeClass("invalid-feedback")
                 $("#username-check").addClass("valid-feedback");
-                $("#username-check").html("사용 가능한 아이디입니다.");
+                $("#username").removeClass("form-control is-invalid");
                 $("#username").addClass("form-control is-valid");
+                $("#username-check").html("사용 가능한 아이디입니다.");
             } else {
-                console.log("fail : " + response.data);
+                $("#username-check").removeClass("valid-feedback")
                 $("#username-check").addClass("invalid-feedback");
-                $("#username-check").html("이미 사용중인 아이디입니다.");
+                $("#username").removeClass("form-control is-valid");
                 $("#username").addClass("form-control is-invalid");
+                $("#username-check").html("이미 사용중인 아이디입니다.");
             }
 
         }).fail(function(error){
