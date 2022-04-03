@@ -7,7 +7,7 @@
 
       <div class="form-group row">
         <label for="username">Username:</label>
-        <input type="text" class="form-control" id="username" placeholder="Enter username" name="username" required>
+        <input type="text" class="form-control" id="username-join" placeholder="Enter username" name="username" required>
         <div id="username-check"></div>
       </div>
 

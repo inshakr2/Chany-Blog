@@ -16,7 +16,7 @@ let index= {
             this.leave();
         });
 
-        $("#username").on("propertychange change keyup paste input", ()=>{
+        $("#username-join").on("propertychange change keyup paste input", ()=>{
             this.checkUser();
         });
 
@@ -122,7 +122,7 @@ let index= {
 
 
     checkUser: function(){
-        var username = $('#username').val();
+        var username = $('#username-join').val();
 
         $.ajax({
             type:'POST',
@@ -133,14 +133,14 @@ let index= {
             if (response.data == 1) {
                 $("#username-check").removeClass("invalid-feedback")
                 $("#username-check").addClass("valid-feedback");
-                $("#username").removeClass("form-control is-invalid");
-                $("#username").addClass("form-control is-valid");
+                $("#username-join").removeClass("form-control is-invalid");
+                $("#username-join").addClass("form-control is-valid");
                 $("#username-check").html("사용 가능한 아이디입니다.");
             } else {
                 $("#username-check").removeClass("valid-feedback")
                 $("#username-check").addClass("invalid-feedback");
-                $("#username").removeClass("form-control is-valid");
-                $("#username").addClass("form-control is-invalid");
+                $("#username-join").removeClass("form-control is-valid");
+                $("#username-join").addClass("form-control is-invalid");
                 $("#username-check").html("이미 사용중인 아이디입니다.");
             }
 
