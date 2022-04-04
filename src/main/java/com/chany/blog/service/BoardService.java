@@ -23,11 +23,23 @@ public class BoardService {
     private final UserRepository userRepository;
     private final ReplyRepository replyRepository;
 
-    public void write(BoardDto boardDto, User user) {
+    public int write(BoardDto boardDto, User user) {
+        if (boardDto.getTitle().isEmpty() || boardDto.getTitle().isBlank()) {
+            return -1;
+        } else {
 
-        Board board = new Board(boardDto.getTitle(), boardDto.getContent(), user);
+            try {
+                Board board = new Board(boardDto.getTitle(), boardDto.getContent(), user);
+                boardRepository.save(board);
 
-        boardRepository.save(board);
+                return 1;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return -1;
+            }
+
+        }
+
     }
 
     @Transactional(readOnly = true)
