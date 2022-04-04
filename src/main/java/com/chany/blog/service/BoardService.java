@@ -60,13 +60,26 @@ public class BoardService {
         boardRepository.deleteById(id);
     }
 
-    public void update(Integer id, BoardDto boardDto) {
+    public int update(Integer id, BoardDto boardDto) {
         Board findBoard = boardRepository.findById(id)
                 .orElseThrow(() -> {
                     return new IllegalArgumentException("글 수정하기 실패 : ID를 찾을 수 없습니다.");
                 });
 
-        findBoard.updateBoard(boardDto);
+
+        if (boardDto.getTitle().isEmpty() || boardDto.getTitle().isBlank()) {
+            return -1;
+
+        } else {
+
+            try {
+                findBoard.updateBoard(boardDto);
+                return 1;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return -1;
+            }
+        }
     }
 
     public void writeReply(ReplySaveRequestDto replySaveRequestDto) {

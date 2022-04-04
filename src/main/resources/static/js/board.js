@@ -33,7 +33,7 @@ let index= {
 
             if(response.data === -1) {
 
-                alert("게시물 작성에 실패했습니다. 게시글 제목을 작성해주세요.")
+                alert("게시물 작성에 실패했습니다.")
 
             } else {
                 alert("글쓰기가 완료되었습니다.");
@@ -75,8 +75,16 @@ let index= {
                 contentType: "application/json; charset=UTF-8",
                 dataType: "json"
             }).done(function(response){
-                alert("게시물 수정이 완료되었습니다.");
-                location.href = "/board/"+id;
+
+                if(response.data === -1) {
+
+                    alert("게시물 수정에 실패했습니다.")
+
+                } else {
+                     alert("게시물 수정이 완료되었습니다.");
+                    location.href = "/board/"+id;
+                }
+
             }).fail(function(error){
                 alert(JSON.stringify(error));
             });
