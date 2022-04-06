@@ -1,6 +1,7 @@
 package com.chany.blog.service;
 
 import com.chany.blog.dto.UserSaveRequestDto;
+import com.chany.blog.dto.UserUpdateRequestDto;
 import com.chany.blog.model.AuthType;
 import com.chany.blog.model.User;
 import com.chany.blog.repository.UserRepository;
@@ -61,23 +62,23 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Integer update(User requestUser) {
+    public Integer update(UserUpdateRequestDto requestUserDto) {
 
-        if (requestUser.getOauth() == AuthType.NORMAL) {
+        if (requestUserDto.getOauth() == AuthType.NORMAL) {
 
             try {
-                User findUser = userRepository.findById(requestUser.getId())
+                User findUser = userRepository.findById(requestUserDto.getId())
                         .orElseThrow(() -> {
                             return new IllegalArgumentException("회원 수정 실패 : 존재하지 않는 회원입니다.");
                         });
 
-                findUser.setPassword(encoder.encode(requestUser.getPassword()));
-                findUser.setEmail(requestUser.getEmail());
+                findUser.setPassword(encoder.encode(requestUserDto.getPassword()));
+                findUser.setEmail(requestUserDto.getEmail());
 
                 // 세션 등록
 
                 Authentication authenticate = manager.authenticate(
-                        new UsernamePasswordAuthenticationToken(requestUser.getUsername(), requestUser.getPassword())
+                        new UsernamePasswordAuthenticationToken(requestUserDto.getUsername(), requestUserDto.getPassword())
                 );
                 SecurityContextHolder.getContext().setAuthentication(authenticate);
 

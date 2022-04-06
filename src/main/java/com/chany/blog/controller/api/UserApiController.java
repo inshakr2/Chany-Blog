@@ -2,6 +2,7 @@ package com.chany.blog.controller.api;
 
 import com.chany.blog.dto.ResponseDto;
 import com.chany.blog.dto.UserSaveRequestDto;
+import com.chany.blog.dto.UserUpdateRequestDto;
 import com.chany.blog.model.User;
 import com.chany.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,9 @@ public class UserApiController {
     }
 
     @PutMapping("/user")
-    public ResponseDto<Integer> update(@RequestBody User user) {
+    public ResponseDto<Integer> update(@RequestBody UserUpdateRequestDto userUpdateRequestDto) {
 
-        int result = userService.update(user);
+        int result = userService.update(userUpdateRequestDto);
 
         return new ResponseDto<Integer>(HttpStatus.OK.value(), result);
     }

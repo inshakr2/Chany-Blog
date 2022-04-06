@@ -75,7 +75,7 @@ let index= {
                 contentType: "application/json; charset=UTF-8",
                 dataType: "json"
             }).done(function(response){
-
+                console.log(response.data)
                 if(response.data === -1) {
 
                     alert("게시물 수정에 실패했습니다.")
