@@ -32,9 +32,10 @@ public class UserApiController {
     }
 
     @DeleteMapping("/user")
-    public ResponseDto<Integer> leave(@RequestBody User user, HttpSession session) {
+    public ResponseDto<Integer> leave(@RequestParam int userId, HttpSession session) {
+        System.out.println(userId);
 
-        userService.leave(user.getId());
+        userService.leave(userId);
         session.invalidate();
 
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
@@ -42,7 +43,6 @@ public class UserApiController {
 
     @PostMapping("/auth/user/check")
     public ResponseDto<Integer> userCheck(@RequestParam String username) {
-        System.out.println("UserApiController.userCheck ::: " + username);
         int res = userService.userCheck(username);
 
         return new ResponseDto<Integer>(HttpStatus.OK.value(), res);

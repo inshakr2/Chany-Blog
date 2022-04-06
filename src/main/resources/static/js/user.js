@@ -96,20 +96,12 @@ let index= {
 
     leave: function(){
         if (confirm("정말 탈퇴하시겠습니까?")) {
-            let data = {
-                id: $("#id").val(),
-                username: $("#username").val(),
-                password: $("#password").val(),
-                email: $("#email").val(),
-                oauth: $("#oauth").val()
-            };
-
+            var userId = $('#id').val();
+            console.log(userId);
             $.ajax({
                 type: "DELETE",
                 url: "/user",
-                data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json"
+                data: {userId:userId}
             }).done(function(response){
                 alert("회원 탈퇴 완료");
                 location.href = "/";
