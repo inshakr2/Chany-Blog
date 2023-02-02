@@ -19,7 +19,7 @@
 
       <div class="form-group row">
         <label for="re-password">Confirm Password:</label>
-        <input type="re-password" class="form-control" id="re-password" placeholder="Confirm password" name="re-password" required>
+        <input type="password" class="form-control" id="re-password" placeholder="Confirm password" name="re-password" required>
       </div>
       <div class="alert alert-danger" id="pwd-check-result">비밀번호가 일치하지 않습니다.</div>
 
